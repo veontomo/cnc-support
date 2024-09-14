@@ -13,7 +13,9 @@ public class App {
 		Collection<Path> paths;
 		try {
 			paths = Loader.extractPaths(new File(args[0]));
-			Collection<Path> withoutDiplicates = Simplifier.removeDuplicates(paths);
+			Collection<Path> withoutDuplicates = Simplifier.removeDuplicates(paths);
+			String output = Loader.toSvgFormat(withoutDuplicates);
+			Loader.save(output, args[1]);
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}

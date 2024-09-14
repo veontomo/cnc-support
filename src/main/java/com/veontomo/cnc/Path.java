@@ -1,13 +1,14 @@
 package com.veontomo.cnc;
 
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class Path {
 
 	private final LinkedList<Segment> segments;
 	private final int size;
 
-	private Path(LinkedList<Segment> segments) {
+	public Path(LinkedList<Segment> segments) {
 		this.segments = segments;
 		this.size = this.segments.size();
 	}
@@ -44,6 +45,12 @@ public class Path {
 
 	public Segment getSegment(int index) {
 		return this.segments.get(index);
+	}
+
+	public String toSvgFormat() {
+		String template = "<path d=\"M %s\" fill=\"none\" stroke=\"#000000\" stroke-width=\"0.558\"/>";
+		String coords = this.segments.stream().map(s -> s.concat()).collect(Collectors.joining("L "));
+		return String.format(template, coords);
 	}
 
 }
