@@ -17,24 +17,24 @@ public class Simplifier {
 	 * @return
 	 */
 	public static Collection<Path> removeDuplicates(Collection<Path> paths) {
-		final Set<Segment> segments = new HashSet<>();
+		final Set<Segment> seenSegments = new HashSet<>();
 		final ArrayList<Path> result = new ArrayList<>(paths.size());
 		for (Path path : paths) {
-			final int segmentCount = path.getSegmentCount();
-			LinkedList<Segment> revised = new LinkedList<>();
-			for (int counter = 0; counter < segmentCount; counter++) {
-				final Segment segment = path.getSegment(counter);				
-				if (segments.contains(segment)) {
-					if(!revised.isEmpty()) {
-						result.add(new Path(revised));
-						revised = new LinkedList<Segment>();
+			final int s = path.getSegmentCount();
+			LinkedList<Segment> segments = new LinkedList<>();
+			for (int segCounter = 0; segCounter < s; segCounter++) {
+				final Segment segment = path.getSegment(segCounter);
+				if (seenSegments.contains(segment.order())) {
+					if (!segments.isEmpty()) {
+						result.add(Path.fromSegments(segments));
+						segments = new LinkedList<>();
 					}
 				} else {
-					revised.add(segment);
 					segments.add(segment);
+					seenSegments.add(segment.order());
 				}
-				
 			}
+			result.add(Path.fromSegments(segments));
 		}
 		return result;
 	}

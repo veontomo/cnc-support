@@ -23,9 +23,11 @@ public class Loader {
 	public static Collection<Path> extractPaths(File file)
 			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+//		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+//		dbf.setFeature(XMLConstants.ACCESS_EXTERNAL_DTD, true);
 
 		DocumentBuilder db = dbf.newDocumentBuilder();
+
 		Document doc = db.parse(file);
 		doc.getDocumentElement().normalize();
 
